@@ -1,0 +1,227 @@
+\documentclass[titlepage, letterpaper, fleqn]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr} % fancy headers, of course!
+\usepackage{amsmath} % what do you think?
+\usepackage{amsthm} % theorems!
+\usepackage{extramarks} % more cute things
+\usepackage{enumitem} % i'm not sure...
+\usepackage{multicol} % multicolumn...?
+\usepackage{amssymb} % more symbols
+\usepackage{MnSymbol} % moar symbols?
+\usepackage{booktabs} % cool looking tables
+\usepackage{tikz} %venn and shizzle
+\usepackage{mathrsfs} %math script for calligraphic scripting, I GUESS
+\usepackage{listings}
+\usepackage{mathtools}
+\usepackage[spanish, mexico]{babel}
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+
+%
+% You should change this things~
+%
+
+\newcommand{\mahteacher}{Dr. Ernesto Rodríguez Leal}
+\newcommand{\mahclass}{Robótica}
+\newcommand{\mahtitle}{Homework 02}
+\newcommand{\mahdate}{\today}
+
+\newcommand{\spacepls}{\vspace{5mm}}
+\renewcommand\qedsymbol{\(\blacksquare\)}
+\renewcommand{\ttdefault}{pcr} %so we can get both bold and tt fonts
+
+\newcommand{\bigO}{\mathcal{O}} %you should be inside a math environment
+\let\bs\mathbf
+
+%
+% Header markings
+%
+
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\rhead{}
+\lfoot{}
+\rfoot{}
+
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+\setlength\parskip{0.5pt}
+
+
+%
+% Create Problem Sections (stolen directly from jdavis/latex-homework-template @ github!)
+%
+
+\newcommand{\enterProblemHeader}[1]{
+\nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+\nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+\nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+\stepcounter{#1}
+\nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Exercise \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%Solution Environment
+% \newenvironment{solution}
+% {\renewcommand\qedsymbol{$\square$}\begin{proof}[Solution]}
+% {\end{proof}}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\Large Solution}}
+
+%Alias for the new step section
+\newcommand{\steppy}[1]{\textbf{\large #1}}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+\ifnum#1>0
+\setcounter{homeworkProblemCounter}{#1}
+\fi
+\section{Problem \arabic{homeworkProblemCounter}}
+\setcounter{partCounter}{1}
+\enterProblemHeader{homeworkProblemCounter}
+}{
+\exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% My actual info
+%
+
+\title{
+\vspace{1in}
+\textbf{Tecnológico de Monterrey} \\
+\vspace{0.5in}
+\textmd{\mahclass} \\
+\large{\textit{\mahteacher}} \\
+\vspace{0.5in}
+\textsc{\mahtitle}\\
+\author{Alicia del Río \and Cristina \and Guillermo Sotelo \and Sergio Sedas \and Xavier Sánchez}
+\date{\mahdate}
+}
+
+\begin{document}
+
+\begin{titlepage}
+\maketitle
+\end{titlepage}
+
+%
+% Actual document starts here~
+%
+
+\section{Cinemática Directa} % (fold)
+\label{sec:forward}
+
+Esta sección describe las ecuaciones del análisis de cinemática directa asumiendo que tenemos el diagrama justo como en el paper de Meccanica.
+La sección está dividida en subsecciones dependiendo del tipo de ecuaciones que se trate.
+
+\subsection{Lazo cerrado} % (fold)
+\label{sec:loop-closure}
+
+% subsection loop-closure (end)
+
+\begin{equation}
+    \label{eq:loop-closure}
+    p+b_i = a_i + d_i
+\end{equation}
+
+\begin{equation}
+    \label{eq:p-vector}
+    \bs{p} = [p_x,p_y,p_z]^T
+\end{equation}
+
+\begin{equation}
+    \label{eq:a-vector}
+    \bs{a}_i = \bs{R}(Z,\psi_i) \cdot [a,0,0]^T
+\end{equation}
+
+\begin{equation}
+    \label{eq:b-vector}
+    \bs{b}_i = \prescript{G}{}{\bs{R}}_H \cdot \bs{R}(Z,\chi_i) \cdot [b_i, 0, 0]^T
+\end{equation}
+
+\begin{equation}
+    \label{eq:d-vector}
+    \bs{d}_i = \bs{R}(Z,\psi_i) \cdot \bs{R}(\prescript{I}{}{Z},\phi) \cdot \bs{R}(\prescript{II}{}{X}, \theta_{i1})[0,d,0]^T
+\end{equation}
+
+\subsection{Matrices de rotación} % (fold)
+\label{sec:rotations}
+
+\begin{equation}
+    \label{eq:rot_Z_psi}
+    \bs{R}(Z,\psi_i) =
+    \begin{bmatrix}
+        \cos\psi_i & -\sin\psi_i & 0 \\
+        \sin\psi_i & \cos\psi_i & 0 \\
+        0 & 0 & 1
+    \end{bmatrix}
+\end{equation}
+
+\begin{equation}
+    \label{eq:rot_Z_phi}
+    \bs{R}(Z,\phi) =
+    \begin{bmatrix}
+        \cos\phi_i & -\sin\phi_i & 0 \\
+        \sin\phi_i & \cos\phi_i & 0 \\
+        0 & 0 & 1
+    \end{bmatrix}
+\end{equation}
+
+\begin{equation}
+    \label{eq:rot_X_theta}
+    \bs{R}(X,\theta_{i1}) =
+    \begin{bmatrix}
+        1 & 0 & 0 \\
+        0 & \cos\theta_{i1} & -\sin\theta_{i1} \\
+        0 & \sin\theta_{i1} & \cos\theta_{i1}
+    \end{bmatrix}
+\end{equation}
+
+\begin{equation}
+    \label{eq:rot_H_global}
+    \prescript{G}{}{\bs{R}}_H =
+    \bs{R}(Z,\gamma) =
+    \begin{bmatrix}
+    u_x & v_x & w_x \\
+    u_y & v_y & w_y \\
+    u_z & v_z & w_z
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+    \cos\gamma & -\sin\gamma & 0 \\
+    \sin\gamma & \cos\gamma & 0 \\
+    0 & 0 & 1
+    \end{bmatrix}
+\end{equation}
+
+% subsection rotations (end)
+
+% section forward (end)
+\end{document}

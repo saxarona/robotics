@@ -167,7 +167,7 @@ La sección está dividida en subsecciones dependiendo del tipo de ecuaciones qu
 
 \begin{equation}
     \label{eq:b_vector}
-    \bs{b}_i = \prescript{G}{}{\bs{R}}_H \cdot \bs{R}(Z,\chi_i) \cdot [b_i, 0, 0]^T
+    \bs{b}_i = \bs{R}(Z,\chi_i)\cdot \bs{R}(Z, \gamma_i) \cdot \bs{R}(Y, \beta_i) \cdot [0, b_i, 0]^T
 \end{equation}
 
 \begin{equation}
@@ -190,7 +190,7 @@ La sección está dividida en subsecciones dependiendo del tipo de ecuaciones qu
 
 \begin{equation}
     \label{eq:rot_Z_phi}
-    \bs{R}(Z,\phi) =
+    \bs{R}(Z,\phi_i) =
     \begin{bmatrix}
         \cos\phi_i & -\sin\phi_i & 0 \\
         \sin\phi_i & \cos\phi_i & 0 \\
@@ -209,19 +209,32 @@ La sección está dividida en subsecciones dependiendo del tipo de ecuaciones qu
 \end{equation}
 
 \begin{equation}
-    \label{eq:rot_H_global}
-    \prescript{G}{}{\bs{R}}_H =
-    \bs{R}(Z,\gamma) =
+    \label{eq:rot_Z_chi}
+    \bs{R}(Z,\chi_i) =
     \begin{bmatrix}
-    u_x & v_x & w_x \\
-    u_y & v_y & w_y \\
-    u_z & v_z & w_z
-    \end{bmatrix}
-    =
-    \begin{bmatrix}
-    \cos\gamma & -\sin\gamma & 0 \\
-    \sin\gamma & \cos\gamma & 0 \\
+    \cos\chi_i & -\sin\chi_i & 0 \\
+    \sin\chi_i & \cos\chi_i & 0 \\
     0 & 0 & 1
+    \end{bmatrix}
+\end{equation}
+
+\begin{equation}
+    \label{eq:rot_Z_gamma}
+    \bs{R}(Z,\gamma_i) = 
+    \begin{bmatrix}
+    \cos\gamma_i & -\sin\gamma_i & 0 \\
+    \sin\gamma_i & \cos\gamma_i & 0 \\
+    0 & 0 & 1
+    \end{bmatrix}
+\end{equation}
+
+\begin{equation}
+    \label{eq:rot_Y_beta}
+    \bs{R}(Y,\beta_i) =
+    \begin{bmatrix}
+    \cos\beta_i & 0 & \sin\beta_i \\
+    0 & 1 & 0 \\
+    -\sin\beta_i & 0 &\cos\beta_i
     \end{bmatrix}
 \end{equation}
 
@@ -254,14 +267,39 @@ la cuál determina un valor $C$ que denota el centro de la plataforma del robot 
     \end{bmatrix}
     -
     \begin{bmatrix}
-    b_i \cos(\gamma_i + \chi_i) \\
-    b_i \sin(\gamma_i + \chi_i) \\
-    0
+    b_i\cos(\chi_i + \gamma_i)\cos\beta_i \\
+    b_i\sin(\chi_i + \gamma_i)\cos\beta_i \\
+    -b_i \sin\beta_i
     \end{bmatrix}
 \end{equation}
 
 % subsection lazo_cerrado (end)
 % section forward (end)
+
+\section{Cinemática Inversa} % (fold)
+\label{sec:inverse}
+
+\subsection{A partir de lazo cerrado} % (fold)
+\label{sec:closure-loop-inverse}
+
+\begin{equation}
+    \label{eq:theta_from_px}
+    \theta_i = \arccos\left(\frac{a_i \cos\psi_i - b_i\cos\beta_i\cos(\chi_i + \gamma_i) - p_x}{d_i \sin(\phi_i + \psi_i)}\right)
+\end{equation}
+
+\begin{equation}
+    \label{eq:theta_from_py}
+      \theta_i = \arccos \left( \frac{b_i \sin(\chi_i + \gamma_i) \cos\beta_i + py - a_i \sin \psi_i}{d_i\cos(\phi_i + \psi_i)} \right)
+\end{equation}
+
+\begin{equation}
+    \label{eq:theta_from_pz}
+    \theta_i = \arcsin \left(\frac{pz - b_i\sin\beta_i}{d_i}\right)
+\end{equation}
+
+% subsection inverse closure loop (end)
+
+% section cinemática_inversa (end)
 
 \section{Ecuaciones adicionales para la cinemática inversa} % (fold)
 \label{sec:extra_eqs}

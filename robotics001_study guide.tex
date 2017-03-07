@@ -1,0 +1,368 @@
+\documentclass[titlepage, letterpaper, fleqn]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr} % fancy headers, of course!
+\usepackage{amsmath} % what do you think?
+\usepackage{amsthm} % theorems!
+\usepackage{extramarks} % more cute things
+\usepackage{enumitem} % i'm not sure...
+\usepackage{multicol} % multicolumn...?
+\usepackage{amssymb} % more symbols
+\usepackage{MnSymbol} % moar symbols?
+\usepackage{booktabs} % cool looking tables
+\usepackage{tikz} %venn and shizzle
+\usepackage{mathrsfs} %math script for calligraphic scripting, I GUESS
+\usepackage{listings}
+\usepackage{mathtools}
+\usepackage{caption}
+\usepackage[cm]{sfmath}
+\usepackage{tcolorbox}
+
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+
+%
+% You should change this things~
+%
+
+\newcommand{\mahteacher}{Dr. Ernesto Rodríguez Leal}
+\newcommand{\mahclass}{Robótica}
+\newcommand{\mahtitle}{Cinemática Directa}
+\newcommand{\mahdate}{\today}
+
+\newcommand{\spacepls}{\vspace{5mm}}
+\renewcommand\qedsymbol{\(\blacksquare\)}
+\renewcommand{\ttdefault}{pcr} %so we can get both bold and tt fonts
+\renewcommand{\familydefault}{\sfdefault} %The sans-serif font and the like
+
+\newcommand{\bigO}{\mathcal{O}} %you should be inside a math environment
+\let\bs\mathbf
+
+%
+% Command to add format to bmatrix, directly stolen from
+% http://texblog.net/latex-archive/maths/amsmath-matrix/ !!
+%
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+%
+% Header markings
+%
+
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\rhead{}
+\lfoot{}
+\rfoot{}
+
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+\setlength\parskip{0.5pt}
+
+
+%
+% Create Problem Sections (stolen directly from jdavis/latex-homework-template @ github!)
+%
+
+\newcommand{\enterProblemHeader}[1]{
+\nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+\nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+\nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+\stepcounter{#1}
+\nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Exercise \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%Solution Environment
+% \newenvironment{solution}
+% {\renewcommand\qedsymbol{$\square$}\begin{proof}[Solution]}
+% {\end{proof}}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\Large Solution}}
+
+%Alias for the new step section
+\newcommand{\steppy}[1]{\textbf{\large #1}}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+\ifnum#1>0
+\setcounter{homeworkProblemCounter}{#1}
+\fi
+\section{Problem \arabic{homeworkProblemCounter}}
+\setcounter{partCounter}{1}
+\enterProblemHeader{homeworkProblemCounter}
+}{
+\exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% My actual info
+%
+
+\title{
+\vspace{1in}
+\textbf{Tecnológico de Monterrey} \\
+\vspace{0.5in}
+\textmd{\mahclass} \\
+\large{\textit{\mahteacher}} \\
+\vspace{0.5in}
+\textsc{\mahtitle}\\
+\author{Xavier Sánchez \\
+01170065\\
+\texttt{xavier.sanchezdz@gmail.com}}
+\date{\mahdate}
+}
+
+\begin{document}
+
+\begin{titlepage}
+\maketitle
+\end{titlepage}
+
+%
+% Actual document starts here~
+%
+
+\section{Kinematics} % (fold)
+\label{sec:kinematics}
+
+Kinematics is the study of the movement, in this case, of a robot.
+
+A serial robot, like a robotic arm, has a number of \textbf{links}.
+These links form each part of the robot, those which are rigid.
+Links are usually referred to using $\bs{n}$.
+
+Between two links, there's always a \textbf{joint}.
+Joints can \textbf{rotate} or \textbf{move}.
+Joint are usually referred to  using $\bs{j}$.
+Revolute joints rotate, while Prismatic joints move.
+
+Any movement o rotation in one dimension is called a \textbf{degree of freedom}, or simply DOF.
+It's common to think of a fully functional robot to have at least 6-DOF,
+3 for rotations and 3 for movement; one on each dimension.
+
+To calculate the \textbf{dof of a system}, one would apply the following equation:
+
+\begin{equation}
+    \label{eq:dof_system}
+    DOF = An - Cn
+\end{equation}
+
+Where $A$ is the number of parameters of each link $n$,
+and $C$ is the number of constraints.
+It is, usually, $6n-Cn$, since 6 DOF are expected on each link.
+The number of constraints is usually $n-1$
+
+A robot is said to be \textbf{redundant} if it has more links than the DOF of the end-effector.
+This is calculated as follows:
+
+\begin{equation}
+    \label{eq:dof_redundancy}
+    n-m_0
+\end{equation}
+
+Where $n$ is the number of links, and $m_0$ are the DOF of the end-effector.
+
+\subsection{Rotation matrices} % (fold)
+\label{sec:rotation_matrices}
+
+The \textit{basic} rotations matrices are always the same.
+They are multiplied by the desired angle, and give you the output rotation.
+The following are the elemental rotation:
+
+\begin{equation}
+    \label{eq:rot_x}
+    \bs{R}(X,\theta) =
+    \begin{bmatrix}
+        1 & 0 & 0 \\
+        0 & \cos \theta & - \sin \theta \\
+        0 & \sin \theta & \cos \theta
+    \end{bmatrix}
+\end{equation}
+
+\begin{equation}
+    \label{eq:rot_y}
+    \bs{R}(Y,\theta) =
+    \begin{bmatrix}
+        \cos \theta & 0 & \sin \theta \\
+        0 & 1 & 0 \\
+        - \sin \theta & 0 & \cos \theta
+    \end{bmatrix}
+\end{equation}
+
+\begin{equation}
+    \label{eq:rot_z}
+    \bs{R}(Z,\theta) =
+    \begin{bmatrix}
+        \cos \theta & - \sin \theta & 0 \\
+        \sin \theta & \cos \theta & 0 \\
+        0 & 0 & 1
+    \end{bmatrix}
+\end{equation}
+
+To get the rotation matrices of a reference frame according to another,
+then you need to do the \textbf{dot product} of each axis on both frames,
+so you end up with a new matrix that has an element-wise multiplication.
+
+Another interesting feature is that rotation matrices are \textbf{orthonormal}, since their inverse is equal to their transverse, i.e.:
+
+\begin{equation}
+    \label{eq:ortho}
+    \bs{R}^{-1} = \bs{R}^T
+\end{equation}
+
+% subsection rotation_matrices (end)
+
+\subsection{Position} % (fold)
+\label{sec:position}
+
+The \textbf{position} of a point, let's say $P$,
+with respect to the origin (usually denoted as $O$)
+is described by a vector from $O$ to $P$:
+simply put, $p$.
+
+To \textbf{map a vector} from one reference system to another,
+you need to multiply vector by the rotation matrix from one system to the other, that is:
+
+\begin{equation}
+    \label{eq:vector_mapping}
+    P_A = \bs{R}P_B
+\end{equation}
+
+Where $P_B$ is the vector from point $P$ to reference system $B$,
+and $P_A$ is the vector from Point $P$ to reference system $A$.
+
+% subsection position (end)
+
+\subsection{Translation} % (fold)
+\label{subsec:translation}
+
+The final position in a \textbf{translation} is obtained when you sum all vectors included in said translation.
+
+\spacepls
+
+\begin{tcolorbox}
+REMEMBER KIDDO: if you're gonna operate with vectors (sum, for example) then \textbf{ALL} vectors must be with respect of the \textbf{SAME} system, that is, the origin. \textbf{ALWAYS}.
+\end{tcolorbox}
+
+% subsection translation (end)
+
+\subsection{Homogeneous Transform} % (fold)
+\label{subsec:homogeneous_transform}
+
+An \textbf{homogeneous transform} is a special matrix which contains the position of the end effector.
+This position is expressed as the product of all needed rotations,
+and then by its displacements (vectors).
+An additional row of 1s or 0s is added: 1 if it's a vector, 0 if it's a rotational matrix.
+The homogeneous transform is usually denoted by $\bs{T}$ or $\bs{H}$.
+
+\begin{equation}
+    \label{eq:transform_general}
+    P_2 = \begin{bmatrix}[ccc|c]
+    & \bs{R}(K,\theta) & & Q \\ \hline
+    0 & 0 & 0 & 1
+    \end{bmatrix} P_1
+\end{equation}
+
+This means that a point $P_2$ can be obtained from the product of $P_1$ by its transform matrix:
+
+\begin{equation}
+    \label{eq:transforming}
+    P_2 = T P_1
+\end{equation}
+
+% subsection homogeneous_transform (end)
+
+% section kinematics (end)
+
+\section{Denavit-Hartenberg} % (fold)
+\label{sec:denavit}
+
+Denavit-Hartenberg is a representation convention that can be applied to \textbf{serial} robots.
+It uses four parameters:
+
+\begin{itemize}
+    \item $\bs{\theta}$: a rotation about the $\bs{Z}$-axis.
+    \item $\textbf{d}$: the distance over the $\bs{Z}$-axis.
+    \item $\textbf{a}$: the length of each common normal (joint offset).
+    \item $\bs{\alpha}$: the angle between two successive $\bs{Z}$-axes (joint twist).
+\end{itemize}
+
+And it follows a special procedure.
+First, start off with these steps:
+
+\begin{enumerate}
+    \item Assign joint number $n$ to the first joint.
+    \item Assign a local reference frame for each joint before or after the $n$ joint.
+\end{enumerate}
+
+Now, continue using these easy steps:
+
+\begin{enumerate}
+    \item \textbf{Rotate} about the $Z_n$-axis by $\theta_{n+1}$.
+    \item \textbf{Translate} along the $Z_n$-axis by $d_{n+1}$ to make $X_n$ and $X_{n+1}$ colinear.
+    \item \textbf{Translate} along the $X_n$ axis a distance of $a_{n+1}$ to bring the origins of $X_{n+1}$ together.
+    \item \textbf{Rotate} the $Z_n$-axis about $X_{n+1}$-axis an angle of $\alpha_{n+1}$ to align $Z_n$-axis with $Z_{n+1}$-axis.
+\end{enumerate}
+
+\begin{tcolorbox}
+REMEMBER KIDDO: the $\bs{Y}$-axis is never used in DH representation!
+\end{tcolorbox}
+
+\subsection{D-H General Matrix} % (fold)
+\label{sec:d_h_general_matrix}
+
+The general Denavit-Hartenberg matrix is like a magic formula,
+you just input your values $a, \alpha, d,$ and $\theta$ and you're done for that transformation.
+
+This is the general matrix of DH parameters:
+
+\begin{equation}
+    \label{eq:general_DH}
+    T_{n-1 \to n} =
+    \begin{bmatrix}[ccc|c]
+    \cos \theta_n & -\sin \theta_n & 0 & a_{n-1} \\
+    \sin \theta_n \cos\alpha_{n-1} & \cos \theta_n \cos \alpha_{n-1} & - \sin \alpha_{n-1} & -d_n \sin \alpha_{n-1} \\
+    \sin \theta_n \sin \alpha_{n-1} & \cos \theta_n \sin\alpha_{n-1} & \cos \alpha_{n-1} & d_n \cos \alpha_{n-1} \\ \hline
+    0 & 0 & 0 & 1
+    \end{bmatrix}
+\end{equation}
+
+This means that the only parameter that needs to be obtained for $n$ is $\theta_n$,
+but the rest are parameters from joint $n-1$.
+
+% subsection d_h_general_matrix (end)
+
+% section denavit (end)
+
+\end{document}

@@ -13,7 +13,6 @@
 \usepackage{mathrsfs} %math script for calligraphic scripting, I GUESS
 \usepackage{listings}
 \usepackage{mathtools}
-\usepackage[spanish, mexico]{babel}
 
 \topmargin=-0.45in
 \evensidemargin=0in
@@ -29,7 +28,7 @@
 
 \newcommand{\mahteacher}{Dr. Ernesto Rodríguez Leal}
 \newcommand{\mahclass}{Robótica}
-\newcommand{\mahtitle}{Cinemática Directa}
+\newcommand{\mahtitle}{Kinematic Analysis of a 3-RSP parallel mechanism}
 \newcommand{\mahdate}{\today}
 
 \newcommand{\spacepls}{\vspace{5mm}}
@@ -139,6 +138,18 @@
 % Actual document starts here~
 %
 
+\begin{abstract}
+This paper presents a kinematic analysis of a 3-RSP parallel mechanism.
+The structure of the mechanism is formed by a fixed base and three identical legs of three links connected by a revolute, spherical and prismatic joints from base to top platform.
+The paper includes forward and inverse position analysis, velocity and singularity analysis using screw theory, static and dynamic analysis, and the problems presented during the analysis phase for this particular configuration.
+Results of motion simulation with SolidWorks are then compared with theoretical results obtained from Mathematica.
+\end{abstract}
+
+%Keywords?
+\spacepls
+\textit{Parallel mechanism, RSP architecture, Forward kinematics, Inverse kinematics, Instantaneous screw axis, Jacobian matrix}
+\spacepls
+
 \section{Cinemática Directa} % (fold)
 \label{sec:forward}
 
@@ -152,32 +163,6 @@ Esta sección describe las ecuaciones del análisis de cinemática directa asumi
 \end{figure}
 
 La sección está dividida en subsecciones dependiendo del tipo de ecuaciones que se trate.
-
-\subsection{Punto de Fermat-Torricelli}
-\label{subsec:fermat-torricelli}
-
-El punto de Fermat-Torricelli de un triángulo es un punto en el que la suma de las distancias a los vértices del triángulo es mínima.
-Este punto representa el centro de la plataforma del efector final, es decir, el punto $p$ de la Ecuación~\ref{eq:loop_closure}.
-
-Para hallar este punto se utilizó un enfoque algebraico, el cual es ampliamente desarrollado en~\cite{Palacios-Velez2015}.
-El enfoque de Palacios-Vélez et al. encuentra los componentes $x,$ y $ y$ del punto de Fermat-Torricelli utilizando las siguientes ecuaciones:
-
-\begin{equation}
-    \label{eq:fermat_x}
-    xFermat = \frac{xb(\sqrt{3}xc + yc)(xb + xc + \sqrt{3} yc)}{2\sqrt{3}(xb^2 - xb xc + xc^2 + yc^2 + \sqrt{3} xb yc)}
-\end{equation}
-
-\begin{equation}
-    \label{eq:fermat_y}
-    yFermat = \frac{xb(\sqrt{3}xc + yc)(\sqrt{3}(xb - xc) + yc)}{2\sqrt{3}(xb^2 - xb xc + xc^2 + yc^2 + \sqrt{3} xb yc)}
-\end{equation}
-
-Donde $xa, xb, xc$ representan los componentes $x$ de los vértices $A, B, C$ respectivamente.
-De manera análoga, $yc$ representa el componente $y$ del vértice $C$.
-
-Tras obtener las coordenadas del punto en un plano de dos dimensiones, se procedió a convertir el plano a tres dimensiones para poder encontrar la distancia con respecto al origen.
-
-PENDIENTE
 
 \subsection{Lazo cerrado} % (fold)
 \label{subsec:loop_closure}
@@ -307,6 +292,32 @@ la cuál determina un valor $C$ que denota el centro de la plataforma del robot 
     \end{bmatrix}
 \end{equation}
 
+\subsection{Punto de Fermat-Torricelli}
+\label{subsec:fermat-torricelli}
+
+El punto de Fermat-Torricelli de un triángulo es un punto en el que la suma de las distancias a los vértices del triángulo es mínima.
+Este punto representa el centro de la plataforma del efector final, es decir, el punto $p$ de la Ecuación~\ref{eq:loop_closure}.
+
+Para hallar este punto se utilizó un enfoque algebraico, el cual es ampliamente desarrollado en~\cite{Palacios-Velez2015}.
+El enfoque de Palacios-Vélez et al. encuentra los componentes $x,$ y $ y$ del punto de Fermat-Torricelli utilizando las siguientes ecuaciones:
+
+\begin{equation}
+    \label{eq:fermat_x}
+    xFermat = \frac{xb(\sqrt{3}xc + yc)(xb + xc + \sqrt{3} yc)}{2\sqrt{3}(xb^2 - xb xc + xc^2 + yc^2 + \sqrt{3} xb yc)}
+\end{equation}
+
+\begin{equation}
+    \label{eq:fermat_y}
+    yFermat = \frac{xb(\sqrt{3}xc + yc)(\sqrt{3}(xb - xc) + yc)}{2\sqrt{3}(xb^2 - xb xc + xc^2 + yc^2 + \sqrt{3} xb yc)}
+\end{equation}
+
+Donde $xa, xb, xc$ representan los componentes $x$ de los vértices $A, B, C$ respectivamente.
+De manera análoga, $yc$ representa el componente $y$ del vértice $C$.
+
+Tras obtener las coordenadas del punto en un plano de dos dimensiones, se procedió a convertir el plano a tres dimensiones para poder encontrar la distancia con respecto al origen.
+
+PENDIENTE
+
 % subsection lazo_cerrado (end)
 % section forward (end)
 
@@ -326,5 +337,5 @@ PENDIENTE
 % section ecuaciones_adicionales (end)
 
 \bibliographystyle{abbrv}
-\bibliography{02-mecc}
+\bibliography{biblio}
 \end{document}
